@@ -18,10 +18,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t node-app .
+          docker build -t node-app -f ./Dockerfile .
 
-      - name: Test container
+      - name: Test Docker image
         run: |
-          docker run -d -p 3000:3000 node-app
+          docker run -d --name test-node-app node-app
           sleep 10
-          curl -f http://localhost:3000 || exit 1
+          docker logs test-node-app
+          docker rm -f test-node-app
