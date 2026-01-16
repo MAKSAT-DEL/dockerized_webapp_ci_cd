@@ -1,11 +1,19 @@
 FROM node:18-alpine
 
+# Çalışma dizini
 WORKDIR /app
 
-COPY app/package.json ./
+# package.json ve package-lock.json'i kopyala
+COPY package.json package-lock.json ./
+
+# Node.js bağımlılıklarını kur
 RUN npm install
 
-COPY app ./
+# Tüm uygulama dosyalarını kopyala
+COPY . ./
 
+# Port ayarla
 EXPOSE 3000
-CMD ["node", "app.js"]
+
+# Uygulamayı başlat
+CMD ["npm", "start"]
